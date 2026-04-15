@@ -9,10 +9,10 @@ router = APIRouter(tags=["summarize"])
 
 @router.post("/compress", response_model=SummarizeResponse)
 async def summarize(payload: SummarizeRequest) -> SummarizeResponse:
-    assistant_response = await summarize_response(
-        assistant_response=payload.assistant_response,
+    messages = await summarize_response(
+        chats=payload.messages,
         provider=payload.provider,
     )
     return SummarizeResponse(
-        assistant_response=assistant_response,
+        messages=messages,
     )

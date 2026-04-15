@@ -13,18 +13,17 @@ class LLMProvider(str, Enum):
 
 class Settings(BaseSettings):
     llm_provider: LLMProvider = Field(default=LLMProvider.OLLAMA)
-    
-    # OpenAI specific settings
+
     openai_url: str = Field(default="https://api.openai.com/v1")
     openai_api_key: str = Field(default="")
     openai_model_name: str = Field(default="gpt-4o-mini")
-    
-    # Ollama specific settings
+
     ollama_url: str = Field(default="http://localhost:11434")
     ollama_model_name: str = Field(default="qwen2.5:3b")
-    
+
     request_timeout: float = Field(default=60.0)
-    
+    tail_message_count: int = Field(default=3, ge=0)
+
     cors_origins: str = Field(default="*")
     cors_allow_credentials: bool = Field(default=True)
     cors_allow_methods: str = Field(default="*")

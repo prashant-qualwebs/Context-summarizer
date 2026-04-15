@@ -1,20 +1,18 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List, Literal
 
 from app.config import LLMProvider
 
 
+class ChatMessage(BaseModel):
+    role: Literal["system", "user", "assistant"]
+    content: str = Field(..., min_length=1)
+
+
 class SummarizeRequest(BaseModel):
-    assistant_response: str = Field(
-        ...,
-        min_length=1,
-        description="Full assistant response before filtering.",
-    )
-    provider: Optional[LLMProvider] = Field(
-        default="openai",
-        description="LLM provider to use: 'openai' or 'ollama'. If not specified, uses the default from settings.",
-    )
+    messages: List[ChatMessage] = Field(..., min_items=1)
+    provider: Optional[LLMProvider] = Field(default="openai")
 
 
 class SummarizeResponse(BaseModel):
-    assistant_response: str
+    messages: List[ChatMessage] = Field(..., min_items=1)
