@@ -7,7 +7,7 @@ from app.service.summarize_service import summarize_response
 router = APIRouter(tags=["summarize"])
 
 
-@router.post("/compress", response_model=SummarizeResponse)
+@router.post("/summarize", response_model=SummarizeResponse)
 async def summarize(payload: SummarizeRequest) -> SummarizeResponse:
     messages = await summarize_response(
         chats=payload.messages,
